@@ -1,0 +1,16 @@
+node_modules/
+dist/
+dist-electron/
+release/
+build/
+coverage/
+.env
+.env.*
+!.env.example
+*.log
+*.out
+*.status
+*.done
+*.bin
+.DS_Store
+Thumbs.db

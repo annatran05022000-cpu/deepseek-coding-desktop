@@ -1,0 +1,74 @@
+{
+  "name": "deepseek-coding-desktop",
+  "version": "0.2.1",
+  "private": true,
+  "description": "Desktop chat and agentic coding client for DeepSeek-compatible APIs",
+  "main": "dist-electron/main.js",
+  "scripts": {
+    "dev": "npm run build:electron && concurrently -k \"vite --host 127.0.0.1\" \"wait-on tcp:5173 && cross-env VITE_DEV_SERVER_URL=http://127.0.0.1:5173 electron .\"",
+    "build:renderer": "vite build",
+    "build:electron": "tsc -p tsconfig.electron.json",
+    "build": "npm run build:renderer && npm run build:electron",
+    "dist:win": "npm run build && electron-builder --win nsis",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.electron.json"
+  },
+  "dependencies": {
+    "diff": "9.0.0",
+    "lucide-react": "1.47.0",
+    "qrcode": "^1.5.4",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "react-markdown": "10.1.0",
+    "react-syntax-highlighter": "16.1.1",
+    "remark-gfm": "4.0.1",
+    "ws": "^8.21.3"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.1",
+    "@types/qrcode": "^1.5.6",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@types/ws": "^8.18.1",
+    "@vitejs/plugin-react": "6.1.1",
+    "concurrently": "10.0.4",
+    "cross-env": "10.1.0",
+    "electron": "44.4.2",
+    "electron-builder": "26.15.3",
+    "typescript": "7.0.2",
+    "vite": "8.3.0",
+    "wait-on": "9.1.0"
+  },
+  "build": {
+    "appId": "com.local.deepseekcodingdesktop",
+    "productName": "DeepSeek Coding Desktop",
+    "asar": true,
+    "files": [
+      "dist/**/*",
+      "dist-electron/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "output": "release"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "DeepSeek-Coding-Desktop-${version}-Setup.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}
